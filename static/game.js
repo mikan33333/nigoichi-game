@@ -1,5 +1,6 @@
 'use strict';
 
+
 const socket = io.connect();
 
 function gameStart(){
@@ -1398,4 +1399,5 @@ function buttonClick2(){
   }
     });
   
+
 }
