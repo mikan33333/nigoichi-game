@@ -8,6 +8,11 @@ const socketIO = require('socket.io');
 const app = express();
 const server = http.Server(app);
 const io = socketIO(server);
+const port = process.env.PORT || 8080;
+server.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+
 
 const FIELD_WIDTH = 320, FIELD_HEIGHT = 480;
 class Player{
@@ -302,3 +307,4 @@ app.get('/', (request, response) => {
 server.listen(3000, function() {
   console.log('Starting server on port 3000');
 });
+
