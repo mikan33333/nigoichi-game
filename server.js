@@ -12,9 +12,6 @@ const port = process.env.PORT || 8080;
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/static/index.html');
-});
 
 
 const FIELD_WIDTH = 320, FIELD_HEIGHT = 480;
@@ -307,8 +304,5 @@ app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname, '/static/index.html'));
 });
 
-server.listen(3000, function() {
-  console.log('Starting server on port 3000');
-});
 
 
