@@ -1,0 +1,347 @@
+<html>
+  <head>
+    <title>ニゴイチ</title>
+     <meta name="viewport"
+   content="width=device-width,
+      height=device-height,
+      initial-scale=1.0,
+      minimum-scale=1.0,
+      maximum-scale=2.0,
+      user-scalable=no" />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+<body style="display: flex; flex-direction: column; width: 100%; height:100% ; margin: 0; background-color:#ffeddb; " >
+    <div style="flex: 1 1; position: relative; overflow:hidden;">
+        <div id="start-screen" style="width:100%; height:100%; display: flex; align-items: center; position:absolute; z-index:10;background-color:rgba(128,128,128,0.5);">
+            <div style="text-align: center; width: 100%; font-size: xx-large;">
+                <input type="text" name="nickname" id="nickname" placeholder="名前を入力" required minlength="1" autofocus><br/><br/>
+                <button style="font-size: xx-large;" id="start-button">参加する</button>
+            </div>
+        </div>
+              <div><p>ニゴイチ</p></div>
+    <style>
+      p {
+        color: #ffff00;
+        font-size: 15;
+        background-color: #ffcc99;
+        padding: 5px;
+        font-weight: bold;
+        font-family: "ＭＳ Ｐゴシック",sans-serif;
+        border-top: 1px solid  black;
+        border-bottom: 1px solid  black;
+        width: 100%;
+          }
+          </style>
+  <style>
+    .hidden-element {
+      display: none;
+    }
+
+  </style>
+  <label for = "ninzuu" style="font-size: 12; margin-left:5px;"><b>何人プレイ？</b></label>
+        <select id = ninzuu style="font-size: 12;" >
+        <option value = "3">3</option>
+        <option value = "4">4</option>
+        <option value = "5">5</option>
+        <option value = "6">6</option>
+        </select>
+        <button style="font-size: 12;" id="odaiButton">お題決め</button>
+  <button id="toggle-button4" style="height:25px; color : #fff; background-color: #eb6100; border-bottom: 2px solid #b84c00; border-right: 2px solid #b84c00; position:absolute; right:20%;" ><b>参加者一覧</b></button>
+       <span12 id="target-element4" class="hidden-element" style=" width:35%; height:70%; align-items: right; position:absolute; margin-top:25px; right:0; background-color:floralwhite; border: solid;
+border-color: black; border: 1px solid; padding: 1px 10px 2em;"><label ><b>＜参加者一覧＞</b></label><br><label  id="playeritiran">参加者読み込みエラー</label>
+  </span12>
+
+
+  <script>
+    const toggleButton4 = document.getElementById('toggle-button4');
+    const targetElement4 = document.getElementById('target-element4');
+
+    toggleButton4.addEventListener('click', function() {
+      targetElement4.classList.toggle('hidden-element');
+    });
+  </script>
+  
+   <button id="toggle-button5" style="height:25px; color : #fff; background-color: royalblue; border-bottom: 2px solid midnightblue; border-right: 2px solid midnightblue;  position:absolute; right:0;" ><b>チャット</b></button>
+   <br>
+  <div2 id="target-element5" class="hidden-element" style=" width:100%; height:100%; align-items: center;  position:absolute; background-color:#ffeddb; white-space: pre-line;">
+ <div9  id="chat" ></div9>
+ <input type="text" id="chatnaiyou"  size="20" style="width:70%; position:absolute; bottom:20%;" /><button id="chatsend" style="position:absolute; bottom:20%; right:15%">送信</button>
+  </div2>
+
+  <script>
+    const toggleButton5 = document.getElementById('toggle-button5');
+    const targetElement5 = document.getElementById('target-element5');
+
+    toggleButton5.addEventListener('click', function() {
+      targetElement5.classList.toggle('hidden-element');
+    });
+  </script>
+    
+        
+         
+        
+       
+        
+        <div>
+        
+       
+        <b><span7 id="roundosuu" style="font-size: 12; margin-left:5px;">1/5ラウンド目</span7></b>
+        <button style="font-size: 12;" id="resetButton">次へ</button>
+        <button style="font-size: 12;" id="resetButton2">新しいゲーム</button>
+        <button style="font-size: 12;" id="odaiButton2">お題全シャッフル</button>
+
+        </div>
+        
+        <table border="1" >
+        <tr>
+        <td ><font color="limegreen">1 </font><br><span id="odai01">お題</span></td>
+        <td ><font color="skyblue">2</font><br><span id="odai02">お題</span></td>
+        <td ><font color="darksalmon">3</font><br><span id="odai03">お題</span></td>
+        </tr>
+        <tr>
+        <td ><font color="mediumorchid">4</font><br><span id="odai04">お題</span></td>
+        <td ><font color="chocolate">5</font><br><span id="odai05">お題</span></td>
+        <td ><font color="pink">6</font><br><span id="odai06">お題</span></td>
+        </tr>
+        <tr>
+        <td ><font color="yellow">7</font><br><span id="odai07">お題</span></td>
+        <td ><font color="deeppink">8</font><br><span id="odai08">お題</span></td>
+        <td ><font color="khaki">9</font><br><span id="odai09">お題</span></td>
+        </tr>
+        <tr>
+        <td id="td10"><font color="mediumaquamarine">10</font><br><span id="odai10">お題</span></td>
+        <td id="td11"><font color="orange">11</font><br><span id="odai11">お題</span></td>
+        <td id="td12"><font id="suuji12" color="blue">12</font><br><span id="odai12">お題</span></td>
+        </tr>
+        <tr>
+        <td id="td13"><font color="mediumseagreen">13</font><br><span id="odai13">お題</span></td>
+        <td id="td14"></td>
+        <td id="td15"></td>
+        </tr>
+        </table>
+        <style>
+      span {
+        color: black;
+        font-size: 16;
+        
+         text-shadow:
+           0px 0px 0px #000, -0px -0px 0px #000,
+          -0px 0px 0px #000,  0px -0px 0px #000,
+           0px 0px 0px #000, -0px  0px 0px #000,
+           0px 0px 0px #000,  0px -0px 0px #000;
+          }
+          </style>
+        
+          <style>
+      td {
+        color: royalblue;
+        font-size: 14;
+        background-color: white;
+        padding: 0px;
+       
+       
+        border: 3px solid lightgray;
+        text-align: center;
+            text-shadow:
+           1px 1px 0px #000, -1px -1px 0px #000,
+          -1px 1px 0px #000,  1px -1px 0px #000,
+           1px 0px 0px #000, -1px  0px 0px #000,
+           0px 1px 0px #000,  0px -1px 0px #000;
+          }
+          </style>
+         <style> 
+         table{
+        table-layout: fixed;
+        width: 100%;
+        height: 25%;
+        background-color: black;}
+        
+        div9{
+            overflow: scroll;
+            width:100%; 
+            height:70%;
+            align-items: center; 
+            position:absolute;
+            background-color:#eaedf7; 
+            color: black;
+        }
+          </style>
+        
+        
+          
+  
+  <button id="toggle-button" style="height:30px; color: black; background-color: gold; border-bottom: 5px solid goldenrod; border-right: 5px solid goldenrod;"><b>あなたのお題</b></button>
+  <div id="target-element" class="hidden-element" style="align-items: center; width:100%; height:100%;  overflow: scroll; align-items: center; position:absolute; background-color:floralwhite">
+    <span2 id=anatanoodai style="display:none">あなたのお題：</span2>
+    <span3 id ="span3"><b>＜あなたのお題＞</b><br>プレイ人数を選んで「お題決め」ボタンを押してね！</span3>
+    <br>
+     <span4 id = rensoutango style="display:none">連想単語：</span4>
+        <input type="text" id="rensou" name="name"  size="10" style="display:none" />
+        <button style="font-size: 12; display:none" id="rensoubutton" >送信</button>
+        <br>
+        <span5 id="span5" style="display:none">連想単語2：</span5>
+        <input type="text" id="rensou2" name="name" required minlength="4" maxlength="8" size="10" style="display:none" />
+        <button style="font-size: 12; display:none" id="rensoubutton2"  >送信</button>
+  </div>
+
+  <script>
+    const toggleButton = document.getElementById('toggle-button');
+    const targetElement = document.getElementById('target-element');
+
+    toggleButton.addEventListener('click', function() {
+      targetElement.classList.toggle('hidden-element');
+      if( targetElement.classList.contains('hidden-element') == true ){
+          document.getElementById('toggle-button').style.color= "black";
+       document.getElementById('toggle-button').style.background= "gold";
+       document.getElementById('toggle-button').style.borderBottom= "5px solid goldenrod";
+       document.getElementById('toggle-button').style.borderRight= "5px solid goldenrod";   
+      }
+      if( targetElement.classList.contains('hidden-element') == false ){
+    document.getElementById('toggle-button').style.color= "black";
+      document.getElementById('toggle-button').style.background= "orange";
+      document.getElementById('toggle-button').style.borderBottom= "3px solid peru";
+      document.getElementById('toggle-button').style.borderRight= "3px solid peru";   
+    }
+    });
+  </script>
+  
+  
+   <button id="toggle-button2" style="height:30px; color: black; background-color: gold; border-bottom: 5px solid goldenrod; border-right: 5px solid goldenrod;"><b>みんなの連想語</b></button>
+   
+    <div id="target-element2" class="hidden-element" style="width:100%; height:100%; align-items: center; overflow: scroll; position:absolute; background-color:floralwhite; white-space: pre-line;"><span13><b>＜みんなの連想語＞</b></span13>
+    <div2 id="minnnanorensou">「あなたのお題」から連想語を送ってね！</div2>
+    <style>
+        span12{white-space: pre-line
+           
+        }
+    </style>
+    
+    </div>
+
+  <script>
+    const toggleButton2 = document.getElementById('toggle-button2');
+    const targetElement2 = document.getElementById('target-element2');
+
+    toggleButton2.addEventListener('click', function() {
+      targetElement2.classList.toggle('hidden-element');
+      if( targetElement2.classList.contains('hidden-element') == true ){
+       document.getElementById('toggle-button2').style.background= "gold";
+       document.getElementById('toggle-button2').style.borderBottom= "5px solid goldenrod";
+       document.getElementById('toggle-button2').style.borderRight= "5px solid goldenrod";   
+      }
+      if( targetElement2.classList.contains('hidden-element') == false ){
+      document.getElementById('toggle-button2').style.background= "orange";
+      document.getElementById('toggle-button2').style.borderBottom= "3px solid peru";
+      document.getElementById('toggle-button2').style.borderRight= "3px solid peru";   
+    }
+    });
+  </script>
+       
+    
+     <button id="toggle-button3" style="height:30px; color: black; background-color: gold; border-bottom: 5px solid goldenrod; border-right: 5px solid goldenrod;" ><b>予想メモ欄</b></button>
+  <div id="target-element3" class="hidden-element" style="width:100%; height:100%; align-items: center;  overflow: scroll; position:absolute; background-color:floralwhite"><span14><b>＜予想メモ欄＞</b></span14><br>
+       
+        <input id="yosou1" type="checkbox"/><label>1</label>
+        <input id="yosou2" type="checkbox"/><label>2</label>
+        <input id="yosou3" type="checkbox"/><label>3</label>
+        <input id="yosou4" type="checkbox"/><label>4</label>
+        <input id="yosou5" type="checkbox"/><label>5</label>
+        <input id="yosou6" type="checkbox"/><label>6</label>
+        <input id="yosou7" type="checkbox"/><label>7</label>
+        <input id="yosou8" type="checkbox"/><label>8</label>
+        <input id="yosou9" type="checkbox"/><label>9</label>
+        <input id="yosou10" type="checkbox"/><label id="yosou210">10</label>
+        <input id="yosou11" type="checkbox"/><label id="yosou211">11</label>
+        <input id="yosou12" type="checkbox"/><label id="yosou212">12</label>
+        <input id="yosou13" type="checkbox"/><label id="yosou213">13</label>
+        <br>
+        <textarea id = "yosoumemo" rows="6" style="width:100%"></textarea>
+        <br>
+
+        <br>
+         <br>
+          <br>
+           <br>
+            <br>
+             <br> <br>
+              <br>
+  </div>
+   
+
+  <script>
+    const toggleButton3 = document.getElementById('toggle-button3');
+    const targetElement3 = document.getElementById('target-element3');
+
+    toggleButton3.addEventListener('click', function() {
+      targetElement3.classList.toggle('hidden-element');
+      if( targetElement3.classList.contains('hidden-element') == true ){
+       document.getElementById('toggle-button3').style.background= "gold";
+       document.getElementById('toggle-button3').style.borderBottom= "5px solid goldenrod";
+       document.getElementById('toggle-button3').style.borderRight= "5px solid goldenrod";   
+      }
+      if( targetElement3.classList.contains('hidden-element') == false ){
+      document.getElementById('toggle-button3').style.background= "orange";
+      document.getElementById('toggle-button3').style.borderBottom= "3px solid peru";
+      document.getElementById('toggle-button3').style.borderRight= "3px solid peru";   
+    }
+    });
+  </script>
+  
+   <button  id="kekkagamen" style="height:30px; color: black; background-color: gold; border-bottom: 5px solid goldenrod; border-right: 5px solid goldenrod;"><b>結果画面</b></button>
+    <div id="kekka-element" class="hidden-element" style="align-items: center; width:100%; height:100%;  overflow: scroll; align-items: center; position:absolute; background-color:floralwhite"><span15><b>＜結果画面＞</b></span15><br>
+    <button  id="kekkabutton" >結果表示</button>
+    <span10 id= "kekka" style="display:none"></span10>
+    <br>
+    <span10 id= "kekka2" style="white-space: pre-line" ></span10>
+    </div>
+    <script>
+    const kekkagamen = document.getElementById('kekkagamen');
+    const kekkaelement = document.getElementById('kekka-element');
+
+    kekkagamen.addEventListener('click', function() {
+      kekkaelement.classList.toggle('hidden-element');
+      if( kekkaelement.classList.contains('hidden-element') == true ){
+       document.getElementById('kekkagamen').style.background= "gold";
+       document.getElementById('kekkagamen').style.borderBottom= "5px solid goldenrod";
+       document.getElementById('kekkagamen').style.borderRight= "5px solid goldenrod";   
+      }
+      if( kekkaelement.classList.contains('hidden-element') == false ){
+      document.getElementById('kekkagamen').style.background= "orange";
+      document.getElementById('kekkagamen').style.borderBottom= "3px solid peru";
+      document.getElementById('kekkagamen').style.borderRight= "3px solid peru";   
+    }
+    });
+  </script>
+       
+        <br>
+                <span6>シークレットは？</span6>
+        <select id = answer >
+        <option value = "0" selected="">--</option>
+        <option value = "1">1</option>
+        <option value = "2">2</option>
+        <option value = "3">3</option>
+        <option value = "4">4</option>
+        <option value = "5">5</option>
+        <option value = "6">6</option>
+        <option value = "7">7</option>
+        <option value = "8">8</option>
+        <option value = "9">9</option>
+        <option id="answer10" value = "10">10</option>
+        <option id="answer11" value = "11">11</option>
+        <option id="answer12" value = "12">12</option>
+        <option id="answer13" value = "13">13</option>
+        </select>
+        <button style="font-size: 12;" id="answerbutton" >送信</button>
+        
+        <br><br>
+        <span11 ><b>得点：</b></span11>
+        <input type="text" id="tokuten"  size="2" />
+        <span11 ><b>点</b></span11>
+    
+    <script src="/static/game.js"></script>
+    <script src="/sever.js"></script>
+    </div>
+    </body>
+ 
+</html>
